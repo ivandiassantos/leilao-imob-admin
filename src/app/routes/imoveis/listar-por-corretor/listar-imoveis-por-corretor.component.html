@@ -1,0 +1,211 @@
+
+<div class="row">
+    <div class="col-sm-12">
+        <mat-card>
+            <mat-card-header>
+                <mat-label>Pesquisar Imóveis</mat-label>
+            </mat-card-header>
+            <mat-card-content>
+                <form class="form-field-full" [formGroup]="pesquisaImoveisForm">
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Nome</mat-label>
+                                <input matInput placeholder="Nome" formControlName="nome">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Tipo de Imóvel</mat-label>
+                                <mat-select formControlName="tipoImovel">
+                                    @for (tipoImovel of tiposImoveis; track tipoImovel) {
+                                    <mat-option
+                                                [value]="tipoImovel.id">{{tipoImovel.nome}}</mat-option>
+                                    }
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-2">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Número de Quartos</mat-label>
+                                <input matInput placeholder="Quantidade de Quartos"
+                                       formControlName="quartos">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-2">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Vagas de Garagem</mat-label>
+                                <input matInput placeholder="Vagas de Garagem"
+                                       formControlName="vagasGaragem">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <!-- <div class="row">
+                        <div class="col-sm-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Financiamento Habitacional</mat-label>
+                                <mat-select formControlName="aceitaFinanciamento">
+                                    <mat-option value="S">Sim</mat-option>
+                                    <mat-option value="N">Não</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Aceita Consórcio</mat-label>
+                                <mat-select formControlName="aceitaConsorcio">
+                                    <mat-option value="S">Sim</mat-option>
+                                    <mat-option value="N">Não</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Aceita Parcelamento</mat-label>
+                                <mat-select formControlName="aceitaParcelamento">
+                                    <mat-option value="S">Sim</mat-option>
+                                    <mat-option value="N">Não</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Com Ação Judicial</mat-label>
+                                <mat-select formControlName="comAcaoJudicial">
+                                    <mat-option value="S">Sim</mat-option>
+                                    <mat-option value="N">Não</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div> -->
+                    <div class="row">
+                        <div class="col-sm">
+                            <button mat-raised-button color="primary"
+                                    [loading]="isSubmitting"
+                                    (click)="pesquisar()">
+                                Pesquisar
+                                <mat-icon>search</mat-icon>
+                            </button>
+                            <button mat-raised-button class="m-l-4"
+                                    (click)="limpar()">
+                                Limpar
+                                <mat-icon>close</mat-icon>
+                            </button>
+                        </div>
+                        <div class="col-sm text-right">
+                            <button mat-raised-button [routerLink]="['/imoveis/incluir']">
+                                Incluir
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </mat-card-content>
+        </mat-card>
+        <mat-card>
+            <mat-card-content>
+                <div class="row">
+                    <div class="col-sm align-middle">
+                        Resultado da Pesquisa
+                    </div>
+                    <div class="col-sm-3 text-right">
+                        <button mat-flat-button [disabled]="selecao.selected.length === 0"
+                                (click)="anunciarSelecionados()">Anunciar Selecionados</button>
+                    </div>
+                    <div class="col-sm-2 text-right">
+                        <button mat-flat-button (click)="anunciarTodos()">Anunciar Todos</button>
+                    </div>
+                </div>
+                <div class="row p-t-12">
+                    <div class="col-sm">
+                        <table mat-table [dataSource]="data"
+                               matSort matSortActive="nome" matSortDisableClear
+                               matSortDirection="asc">
+                            <ng-container matColumnDef="selecao">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    <mat-checkbox (change)="$event ? selecionarLinhas() : null"
+                                                  [checked]="selecao.hasValue() && linhasSelecionadas()"
+                                                  [indeterminate]="selecao.hasValue() && !linhasSelecionadas()">
+                                    </mat-checkbox>
+                                </th>
+                                <td mat-cell *matCellDef="let row">
+                                    <mat-checkbox (click)="$event.stopPropagation()"
+                                                  (change)="$event ? selecao.toggle(row) : null"
+                                                  [checked]="selecao.isSelected(row)"
+                                                  [disabled]="row.corretoresImovel.length > 0">
+                                    </mat-checkbox>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="importadoApi">
+                                <th mat-header-cell *matHeaderCellDef>Anunciado no Site</th>
+                                <td mat-cell *matCellDef="let row">
+                                    @if(row.corretoresImovel.length){
+                                    <button mat-button color="primary">Sim</button>
+                                    }
+                                    @else{
+                                    <button mat-button color="warn">Não</button>
+                                    }
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="numeroImovel">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Número</th>
+                                <td mat-cell *matCellDef="let row">{{row.numeroImovel}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="nome">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
+                                <td mat-cell *matCellDef="let row">{{row.nome}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="tipoImovel.nome">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Tipo</th>
+                                <td mat-cell *matCellDef="let row">{{row.tipoImovel.nome}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="quartos">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Quartos</th>
+                                <td mat-cell *matCellDef="let row">{{row.quartos}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="municipio.nome">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Município</th>
+                                <td mat-cell *matCellDef="let row">{{row.municipio.nome}} -
+                                    {{row.municipio.estado.sigla}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="acoes">
+                                <th mat-header-cell *matHeaderCellDef>Ações</th>
+                                <td mat-cell *matCellDef="let row">
+                                    <button mat-icon-button [matMenuTriggerFor]="menu"
+                                            aria-label="Ações">
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                    <mat-menu #menu="matMenu">
+                                        <button mat-menu-item
+                                                [routerLink]="['/imoveis/detalhar',row.id]">
+                                            <mat-icon>preview</mat-icon>
+                                            <span>Detalhar</span>
+                                        </button>
+                                        @if(!row.imovelLeilao){
+                                            <button mat-menu-item
+                                                    [routerLink]="['/imoveis/alterar',row.id]">
+                                                <mat-icon>edit</mat-icon>
+                                                <span>Alterar</span>
+                                            </button>
+                                            <button mat-menu-item (click)="excluirImovel(row)">
+                                                <mat-icon>delete</mat-icon>
+                                                <span>Excluir</span>
+                                            </button>
+                                        }
+                                    </mat-menu>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            <tr class="mat-row" *matNoDataRow>
+                                <td class="mat-cell" colspan="4">{{'no_results' | translate}}</td>
+                            </tr>
+                        </table>
+                        <mat-paginator [length]="resultsLength" [pageSizeOptions]="[5, 10, 25, 100]"
+                                       aria-label="Select page of users"></mat-paginator>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

@@ -1,0 +1,236 @@
+<div class="row" *ngIf="{imovel:imovelData | async}">
+    <div class="col-sm-12">
+        <mat-card>
+            <mat-card-content>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <mat-card>
+                            <mat-card-header>
+                                <h4>Sobre o Imóvel</h4>
+                            </mat-card-header>
+                            <mat-card-content>
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <p>{{imovel?.nome}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <p>Descrição: {{imovel?.descricao}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <p>Valor de Avaliação: {{imovel?.valorAvaliacao | currency:
+                                            'BRL'}}</p>
+                                    </div>
+                                    @if(imovel?.valorMinimoVendaAVista){
+                                    <div class="col-sm-4">
+                                        <p>Valor Minimo de Venda a Vista:
+                                            {{imovel?.valorMinimoVendaAVista |
+                                            currency: 'BRL'}}</p>
+                                    </div>
+                                    }
+                                    @if(imovel?.valorMinimoVenda){
+                                    <div class="col-sm-4">
+                                        <p>Valor Minimo de Venda: {{imovel?.valorMinimoVenda |
+                                            currency: 'BRL'}}</p>
+                                    </div>
+                                    }
+                                    <div class="col-sm-4">
+                                        <p>Percentual de Desconto: {{imovel?.percentualDesconto |
+                                            number:'':'pt'}}%
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <p>Tipo de Imóvel: {{imovel?.tipoImovel?.nome}}</p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <p>Quartos: {{imovel?.quartos}}</p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <p>Vagas de Garagem: {{imovel?.vagasGaragem}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <p>Área Privativa (m2): {{imovel?.areaPrivativa}}</p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <p>Área do Terreno (m2): {{imovel?.areaTerreno}}</p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <p>Número do Imóvel: {{imovel?.numeroImovel}}</p>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <mat-card>
+                            <mat-card-header>
+                                <h4>Informações Adicionais</h4>
+                            </mat-card-header>
+                            <mat-card-content>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <mat-list role="list">
+                                            <mat-list-item role="listitem"
+                                                           *ngFor="let informacaoAdicional of imovel?.informacoesAdicionais">{{informacaoAdicional.descricao}}</mat-list-item>
+                                        </mat-list>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <mat-card>
+                            <mat-card-header>
+                                <h4>Endereço</h4>
+                            </mat-card-header>
+                            <mat-card-content>
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <p>Endereço: {{imovel?.endereco}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <p>Municipio: {{imovel?.municipio?.nome}} -
+                                            {{imovel?.municipio?.estado?.sigla}}</p>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <mat-card>
+                            <mat-card-header>
+                                <h4>Modalidade de Venda</h4>
+                            </mat-card-header>
+                            <mat-card-content>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <p>Modalidade: {{imovel?.modalidade?.nome}}</p>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <mat-card>
+                            <mat-card-header>
+                                <h4>Informações de Cartório</h4>
+                            </mat-card-header>
+                            <mat-card-content>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p>Matrículas: {{imovel?.matriculas}}</p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <p>Comarca: {{imovel?.comarca}}</p>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <p>Ofício: {{imovel?.oficio}}</p>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <p>Inscrição Imobiliária: {{imovel?.inscricaoImobiliaria}}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <p>Averbação de Leilões Negativos:
+                                            {{imovel?.averbacaoLeiloesNegativos}}</p>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <mat-card>
+                            <mat-card-header>
+                                <h4>Informações Relacionadas ao Leilão</h4>
+                            </mat-card-header>
+                            <mat-card-content>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <p>Edital: {{imovel?.edital}}</p>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <p>Item do Edital: {{imovel?.itemEdital}}</p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p>Averbação de Leilões Negativos:
+                                            {{imovel?.averbacaoLeiloesNegativos}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <p>Nome do Leiloeiro: {{imovel?.nomeLeiloeiro}}</p>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <p>Data da Licitação Aberta: {{imovel?.dataLicitacaoAberta}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <mat-card>
+                            <mat-card-header>
+                                <h4>Fotos do Imóvel</h4>
+                            </mat-card-header>
+                            <mat-card-content>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <mat-grid-list cols="4" rowHeight="1:1">
+                                            @for (imagem of imagensImovel; track imagem; let i =
+                                            $index) {
+                                            <mat-grid-tile>
+                                                <mat-grid-tile-header>
+                                                    <span matLine>Foto {{ i+1 }}</span>
+                                                </mat-grid-tile-header>
+                                                <img class="w-full h-full object-cover cursor-pointer"
+                                                     mtxPhotoviewer
+                                                     [mtxPhotoviewerItems]="imagensImovel"
+                                                     [mtxPhotoviewerOptions]="{ index: i }"
+                                                     [src]="imagem.src" alt="Foto {{ i+1 }}" />
+                                            </mat-grid-tile>
+                                            }
+                                        </mat-grid-list>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+                <mat-card-actions>
+                    @if(imovel?.corretoresImovel?.length){
+                    <button mat-flat-button [loading]="isSubmitting" (click)="remover()">
+                        Remover Anúncio No Meu Site</button>
+                    }
+                    @else{
+                    <button mat-flat-button [loading]="isSubmitting" (click)="importar()">
+                        Anunciar No Meu Site</button>
+                    }
+                </mat-card-actions>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

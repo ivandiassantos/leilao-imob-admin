@@ -1,0 +1,292 @@
+<!-- <breadcrumb [nav]="['home','Imóveis','Incluir']"></breadcrumb> -->
+<div class="row">
+    <div class="col-sm-12">
+        <mat-card>
+            <mat-card-header>
+                Incluir Imóvel
+            </mat-card-header>
+            <mat-card-content>
+                <form class="form-field-full" [formGroup]="incluirImovelForm">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <mat-form-field appearance="outline">
+                                <mat-label>CEP</mat-label>
+                                <input matInput placeholder="CEP" mask="00.000.000" formControlName="cep">
+                                <mat-error>
+                                    @if (cep.errors?.['required']) {
+                                    <span>{{'please_enter' | translate}}
+                                    </span>
+                                    }
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-2">
+                            <mat-checkbox formControlName="cepDesconhecido">Não sei o
+                                CEP</mat-checkbox>
+                        </div>
+                        @if (cepDesconhecido.value === true) {
+                        <div class="col-sm-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Estado</mat-label>
+                                <mat-select formControlName="estado">
+                                    @for (estado of estados; track estado) {
+                                    <mat-option [value]="estado.sigla">{{estado.sigla}} -
+                                        {{estado.nome}}</mat-option>
+                                    }
+                                </mat-select>
+                                <mat-error>
+                                    @if (estado.errors?.['required']) {
+                                    <span>{{'please_enter' | translate}}
+                                    </span>
+                                    }
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Município</mat-label>
+                                <mat-select formControlName="municipio">
+                                    @for (municipio of municipios; track municipio) {
+                                    <mat-option [value]="municipio.id">{{municipio.nome}}</mat-option>
+                                    }
+                                </mat-select>
+                                <mat-error>
+                                    @if (municipio.errors?.['required']) {
+                                    <span>{{'please_enter' | translate}}
+                                    </span>
+                                    }
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        }@else{
+                        <div class="col-sm-3">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Estado</mat-label>
+                                <input matInput placeholder="Estado" formControlName="siglaEstado" readonly>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Município</mat-label>
+                                <input matInput placeholder="Município" formControlName="nomeMunicipio" readonly>
+                            </mat-form-field>
+                        </div>
+                        }
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Endereço</mat-label>
+                                <input matInput placeholder="Endereço" formControlName="endereco">
+                                <mat-error>
+                                    @if (endereco.errors?.['required']) {
+                                    <span>{{'please_enter' | translate}}
+                                    </span>
+                                    }
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-4">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Bairro</mat-label>
+                                <input matInput placeholder="Bairro" formControlName="bairro">
+                                @if (bairro.invalid) {
+                                    <mat-error>
+                                        @if (bairro.errors?.['required']) {
+                                        <span>{{'please_enter' | translate}}
+                                        </span>
+                                        }
+                                        @if (bairro.errors?.['maxlength']) {
+                                        <span>Valor digitado não pode superar a quantidade máxima de 200
+                                            caracteres</span>
+                                        }
+                                    </mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Complemento</mat-label>
+                                <input matInput placeholder="Complemento" formControlName="complemento">
+                                <mat-error>
+                                    @if (complemento.invalid) {
+                                    <mat-error>
+                                        @if (complemento.errors?.['required']) {
+                                        <span>{{'please_enter' | translate}}
+                                        </span>
+                                        }
+                                        @if (complemento.errors?.['maxlength']) {
+                                        <span>Valor digitado não pode superar a quantidade máxima de 200
+                                            caracteres</span>
+                                        }
+                                    </mat-error>
+                                }
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-4">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Numero</mat-label>
+                                <input matInput placeholder="Numero" formControlName="numero">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Nome</mat-label>
+                                <input matInput placeholder="Nome" formControlName="nome">
+                                @if (nome.invalid) {
+                                <mat-error>
+                                    @if (nome.errors?.['required']) {
+                                    <span>{{'please_enter' | translate}}
+                                    </span>
+                                    }
+                                    @if (nome.errors?.['maxlength']) {
+                                    <span>Valor digitado não pode superar a quantidade máxima de 200
+                                        caracteres</span>
+                                    }
+                                </mat-error>
+                                }
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-4">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Tipo de Imóvel</mat-label>
+                                <mat-select formControlName="tipoImovel">
+                                    @for (tipoImovel of tiposImovel; track tipoImovel) {
+                                    <mat-option [value]="tipoImovel.id">{{tipoImovel.nome}}</mat-option>
+                                    }
+                                </mat-select>
+                                <mat-error>
+                                    @if (tipoImovel.errors?.['required']) {
+                                    <span>{{'please_enter' | translate}}
+                                    </span>
+                                    }
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Valor</mat-label>
+                                <input matInput placeholder="Valor" currencyMask
+                                    [options]="{ prefix: '', thousands: '.', decimal: ',' }" formControlName="valor">
+                                <mat-error>
+                                    @if (valor.errors?.['required']) {
+                                    <span>{{'please_enter' | translate}}
+                                    </span>
+                                    }
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-2">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Quartos</mat-label>
+                                <input matInput placeholder="Quartos" type="number" formControlName="quartos">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-2">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Suites</mat-label>
+                                <input matInput placeholder="Suites" type="number" formControlName="suites">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-2">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Área Privativa</mat-label>
+                                <input matInput placeholder="Área Privativa" currencyMask
+                                    [options]="{ prefix: '', thousands: '.', decimal: ',' }"
+                                    formControlName="areaPrivativa">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-2">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Área do Terreno</mat-label>
+                                <input matInput placeholder="Área do Terreno" currencyMask
+                                    [options]="{ prefix: '', thousands: '.', decimal: ',' }"
+                                    formControlName="areaTerreno">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-2">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Vagas de Garagem</mat-label>
+                                <input matInput placeholder="Vagas de Garagem" type="number"
+                                    formControlName="vagasGaragem">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <mat-checkbox formControlName="aceitaFinanciamento">Aceita
+                                Financiamento</mat-checkbox>
+                        </div>
+                        <div class="col-sm-3">
+                            <mat-checkbox formControlName="aceitaFgts">Aceita FGTS</mat-checkbox>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Descrição</mat-label>
+                                <textarea matInput placeholder="Área do Terreno" formControlName="descricao"></textarea>
+                                <mat-error>
+                                    @if (descricao.errors?.['required']) {
+                                    <span>{{'please_enter' | translate}}
+                                    </span>
+                                    }
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 m-b-24">
+                            <div class="file-upload">
+                                <button mat-flat-button color="primary" class="upload-btn" (click)="fileUpload.click()">
+                                    <mat-icon>attach_file</mat-icon>
+                                    Adicionar Fotos
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        @for (foto of fotos; track foto; let index = $index) {
+                        <div class="col-sm-3 m-b-8">
+                            <div class="row m-b-8">
+                                <div class="col">
+                                    <a [href]="foto.src" [title]="foto.title" mtxPhotoviewer
+                                        [mtxPhotoviewerItems]="fotos" [mtxPhotoviewerOptions]="{ index }">
+                                        <img [src]="foto.thumbnail" class="w-full h-full object-cover cursor-pointer"
+                                            alt="" />
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <button mat-flat-button color="warn" (click)="removerFoto(index)">
+                                    <mat-icon>close</mat-icon>
+                                    Remover
+                                </button>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </form>
+            </mat-card-content>
+            <mat-card-actions class="m-t-12">
+                <button mat-flat-button class="m-r-12" [disabled]="!incluirImovelForm.valid"
+                    (click)="cadastrar()">Salvar</button>
+                <button mat-flat-button>Cancelar</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

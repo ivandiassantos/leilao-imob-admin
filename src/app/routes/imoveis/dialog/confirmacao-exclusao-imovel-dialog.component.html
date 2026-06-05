@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Excluir Imóvel</h2>
+<mat-dialog-content>
+  Tem certeza que deseja excluir o imóvel {{data.descricao}}
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Não</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Sim</button>
+</mat-dialog-actions>

@@ -1,0 +1,10 @@
+{
+  "menu": [
+    {
+      "route": "imoveis",
+      "name": "imoveis",
+      "type": "link",
+      "icon": "home"
+    }
+  ]
+}
