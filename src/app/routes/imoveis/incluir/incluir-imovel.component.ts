@@ -127,6 +127,8 @@ export class IncluirImovelComponent implements OnInit {
         this.siglaEstado.setValue('');
         this.estado.setValidators([Validators.required]);
         this.municipio.setValidators([Validators.required]);
+        this.complemento.setValidators([Validators.required]);
+        this.bairro.setValidators([Validators.required]);
         this.resultadoConsultaCep = undefined;
       } else {
         this.cep.setValidators([Validators.required]);
@@ -134,6 +136,8 @@ export class IncluirImovelComponent implements OnInit {
         this.estado.setValue('');
         this.estado.clearValidators();
         this.municipio.clearValidators();
+        this.complemento.clearValidators();
+        this.bairro.clearValidators();
       }
       this.cep.updateValueAndValidity();
       this.estado.updateValueAndValidity();
@@ -168,7 +172,6 @@ export class IncluirImovelComponent implements OnInit {
     if (this.incluirImovelForm.valid) {
       this.imovelService.incluirImovel(this.incluirImovelForm.getRawValue()).subscribe(
         resposta => {
-          console.log(resposta);
           const formData = new FormData();
           for (const arquivo of this.arquivos) {
             formData.append("arquivos", arquivo);

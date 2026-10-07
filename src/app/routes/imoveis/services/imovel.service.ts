@@ -15,7 +15,7 @@ export class ImovelService {
     }
 
     public obterPor(id: string) {
-        return this.http.get<Imovel>(`/api/imovel/${id}`);
+        return this.http.get<Imovel>(`/api/imovel/obter-por-id/${id}`);
     }
 
     public listar(parametros: any, active: string, direction: string, pageIndex: number, pageSize: number) {
