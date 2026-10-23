@@ -8,13 +8,13 @@
             <mat-card-content>
                 <form class="form-field-full" [formGroup]="pesquisaImoveisForm">
                     <div class="row">
-                        <div class="col-sm-5">
+                        <div class="col-sm-4">
                             <mat-form-field appearance="outline">
                                 <mat-label>Nome</mat-label>
                                 <input matInput placeholder="Nome" formControlName="nome">
                             </mat-form-field>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-2">
                             <mat-form-field appearance="outline">
                                 <mat-label>Tipo de Imóvel</mat-label>
                                 <mat-select formControlName="tipoImovel">
@@ -39,45 +39,18 @@
                                        formControlName="vagasGaragem">
                             </mat-form-field>
                         </div>
+                        <div class="col-sm-2">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Imóvel de Leilão?</mat-label>
+                                <mat-select formControlName="imovelLeilao">
+                                    <mat-option [value]="">Ambos</mat-option>
+                                    <mat-option [value]="true">Sim</mat-option>
+                                    <mat-option [value]="false">Não</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
                     </div>
-                    <!-- <div class="row">
-                        <div class="col-sm-3">
-                            <mat-form-field appearance="outline">
-                                <mat-label>Financiamento Habitacional</mat-label>
-                                <mat-select formControlName="aceitaFinanciamento">
-                                    <mat-option value="S">Sim</mat-option>
-                                    <mat-option value="N">Não</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                        <div class="col-sm-3">
-                            <mat-form-field appearance="outline">
-                                <mat-label>Aceita Consórcio</mat-label>
-                                <mat-select formControlName="aceitaConsorcio">
-                                    <mat-option value="S">Sim</mat-option>
-                                    <mat-option value="N">Não</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                        <div class="col-sm-3">
-                            <mat-form-field appearance="outline">
-                                <mat-label>Aceita Parcelamento</mat-label>
-                                <mat-select formControlName="aceitaParcelamento">
-                                    <mat-option value="S">Sim</mat-option>
-                                    <mat-option value="N">Não</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                        <div class="col-sm-3">
-                            <mat-form-field appearance="outline">
-                                <mat-label>Com Ação Judicial</mat-label>
-                                <mat-select formControlName="comAcaoJudicial">
-                                    <mat-option value="S">Sim</mat-option>
-                                    <mat-option value="N">Não</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                    </div> -->
+                    
                     <div class="row">
                         <div class="col-sm">
                             <button mat-raised-button color="primary"

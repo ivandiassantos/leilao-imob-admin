@@ -85,12 +85,12 @@ export class ListarImoveisPorCorretorComponent implements AfterViewInit {
     aceitaFinanciamento: ['', []],
     aceitaConsorcio: ['', []],
     aceitaParcelamento: ['', []],
-    comAcaoJudicial: ['', []]
+    comAcaoJudicial: ['', []],
+    imovelLeilao: ['', []],
   });
 
   ngAfterViewInit() {
     this.listar();
-    this.tipoImovelService.listar().subscribe(tiposImoveis => this.tiposImoveis = tiposImoveis);
   }
 
   pesquisar() {

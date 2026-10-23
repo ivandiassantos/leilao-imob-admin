@@ -32,7 +32,9 @@ export class ImovelService {
         if (parametros.vagasGaragem) {
             url = url.concat(`&filter.vagasGaragem=$eq:${parametros.vagasGaragem}`);
         }
-
+        if (parametros.imovelLeilao !== null && parametros.imovelLeilao !== undefined && parametros.imovelLeilao !== '') {
+            url = url.concat(`&filter.imovelLeilao=$eq:${parametros.imovelLeilao}`);
+        }
         return this.http.get<ListaImoveis>(url);
     }
 
